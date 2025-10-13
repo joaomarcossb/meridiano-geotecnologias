@@ -1,0 +1,14 @@
+# dependências
+node_modules
+
+# builds
+dist
+
+# ambiente
+.env
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
