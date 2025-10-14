@@ -22,21 +22,58 @@ const Field = ({ id, title, type, value, func, holder }) => {
 };
 
 const Form = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState({ subject: '', text: '' });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleName = (e) => {
+    let value = e.target.value;
+    value = value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '');
+    value = value.replace(/\s{2,}/g, ' ');
+    value = value.replace(/^\s/, '');
+    setName(value);
+  };
+
+  const handleEmail = (e) => {
+    let value = e.target.value;
+    value = value.replace(/[^a-zA-Z0-9@._-]/g, '');
+    const parts = value.split('@');
+    if (parts.length > 2) {
+      value = parts[0] + '@' + parts.slice(1).join('').replace(/@/g, '');
+    }
+    setEmail(value);
+  };
+
+  const handlePhone = (e) => {
+    let value = e.target.value;
+    value = value.replace(/\D/g, '').slice(0, 11);
+    if (value.length === 11) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+    } else if (value.length === 10) {
+      value = value.replace(/^(\d{2})(\d{4})(\d{4}).*/, '($1) $2-$3');
+    } else if (value.length > 6) {
+      value = value.replace(/^(\d{2})(\d{0,5})(\d{0,4}).*/, '($1) $2-$3');
+    } else if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    } else {
+      value = value.replace(/^(\d*)/, '($1');
+    }
+    if (value.endsWith('-')) {
+      value = value.slice(0, -1);
+    }
+    if (value.endsWith('(')) {
+      value = value.slice(0, -1);
+    }
+    setPhone(value);
+  };
+
+  const handleMessage = (e) => {
+    setMessage({ ...message, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados enviados:', form);
   };
 
   return (
@@ -47,8 +84,8 @@ const Form = () => {
           id={'name'}
           title={'Nome *'}
           type={'text'}
-          value={form.name}
-          func={handleChange}
+          value={name}
+          func={handleName}
           holder={'Digite seu nome'}
         />
 
@@ -57,8 +94,8 @@ const Form = () => {
           id={'email'}
           title={'E-mail *'}
           type={'email'}
-          value={form.email}
-          func={handleChange}
+          value={email}
+          func={handleEmail}
           holder={'seu@email.com'}
         />
 
@@ -67,8 +104,8 @@ const Form = () => {
           id={'phone'}
           title={'Telefone *'}
           type={'phone'}
-          value={form.phone}
-          func={handleChange}
+          value={phone}
+          func={handlePhone}
           holder={'(00) 00000-0000'}
         />
 
@@ -77,8 +114,8 @@ const Form = () => {
           id={'subject'}
           title={'Assunto *'}
           type={'subject'}
-          value={form.subject}
-          func={handleChange}
+          value={message.subject}
+          func={handleMessage}
           holder={'Como podemos ajudar?'}
         />
 
@@ -93,8 +130,8 @@ const Form = () => {
           <textarea
             id='message'
             name='message'
-            value={form.message}
-            onChange={handleChange}
+            value={message.text}
+            onChange={handleMessage}
             rows='3'
             required
             className='w-full px-4 py-2 border font-[inter] resize-none border-gray-300 rounded-lg focus:ring-2 text-emerald-800 focus:ring-amber-200 focus:outline-none'

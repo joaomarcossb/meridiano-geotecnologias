@@ -5,7 +5,7 @@ import { StarIcon } from '@heroicons/react/16/solid';
 // CARDS PERSONALIZÁVEIS
 const Card = ({ icon, title, text }) => {
   return (
-    <div className='w-full rounded-lg p-10 shadow-[0_0_25px_rgba(0,0,0,0.15)] bg-white'>
+    <div className='w-full rounded-lg p-10 shadow-[0_0_25px_rgba(0,0,0,0.15)] bg-white border-transparent border-2 hover:border-amber-200'>
       <div className='w-12 h-12 rounded-lg bg-gradient-to-bl from-white to-amber-100 mb-4'>
         {icon}
       </div>

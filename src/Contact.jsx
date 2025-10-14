@@ -5,9 +5,12 @@ import {
   MapPinIcon,
 } from '@heroicons/react/24/outline';
 
-const Card = ({ icon, title, info }) => {
+const Card = ({ icon, title, info, func }) => {
   return (
-    <div className='flex flex-row gap-2 p-5 hover:bg-emerald-100 cursor-pointer rounded-xl'>
+    <div
+      onClick={func}
+      className='flex flex-row gap-2 p-5 hover:bg-emerald-100 cursor-pointer rounded-xl'
+    >
       <div className='flex bg-gradient-to-bl from-white to-amber-100 rounded-xl place-items-center'>
         <div className='h-12 w-12 p-2 text-amber-400'>{icon}</div>
       </div>
@@ -20,6 +23,24 @@ const Card = ({ icon, title, info }) => {
 };
 
 const Contact = () => {
+  const openGoogleMaps = () => {
+    const url = 'https://maps.app.goo.gl/AJJp14bf6sQ6MqAYA';
+    window.open(url, '_blank');
+  };
+
+  const openWhatsApp = () => {
+    const phone = 71981843695;
+    const url = `https://wa.me/${phone}`;
+    window.open(url, '_blank');
+  };
+
+  const sendEmail = () => {
+    const email = 'contato@meridianogeotecnologias.com.br';
+    const subject = 'Contato via site';
+    const body = 'Olá, gostaria de saber mais sobre seus serviços.';
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <section
       id='contact'
@@ -51,16 +72,19 @@ const Contact = () => {
               icon={<EnvelopeIcon />}
               title={'Email'}
               info={'contato@meridianogeotecnologias.com.br'}
+              func={sendEmail}
             />
             <Card
               icon={<PhoneIcon />}
               title={'Telefone'}
-              info={'(71) 99976-8309'}
+              info={'(71) 98184-3695'}
+              func={openWhatsApp}
             />
             <Card
               icon={<MapPinIcon />}
               title={'Localização'}
               info={'Salvador, BA - Brasil'}
+              func={openGoogleMaps}
             />
           </div>
           <div className='font-[poppins] text-lg text-white bg-gradient-to-br from-emerald-800 to-emerald-600 rounded-xl px-8 py-6'>
