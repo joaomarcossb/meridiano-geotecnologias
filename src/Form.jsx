@@ -141,7 +141,7 @@ const Form = () => {
         {/* Botão */}
         <button
           type='submit'
-          className='font-[poppins] flex text-sm gap-2 justify-center items-center w-full bg-amber-300 text-emerald-900 py-3 rounded-lg cursor-pointer font-semibold hover:opacity-95 active:scale-95'
+          className='font-[poppins] flex text-sm gap-2 justify-center items-center w-full bg-amber-200 text-emerald-900 py-3 rounded-lg cursor-pointer font-semibold hover:opacity-95 active:scale-95'
         >
           <span className='block'>Enviar Mensagem</span>
           <PaperAirplaneIcon className='block w-5 h-5 pt-1' />
